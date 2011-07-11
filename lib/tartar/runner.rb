@@ -56,10 +56,14 @@ class Tartar::Runner
     counter = 0
     loop do
       counter += 1
-      @@outstream.puts("list") if (counter % (INFOS_TIME/SLEEP_TIME)) == 0
+      if (counter % (INFOS_TIME/SLEEP_TIME)) == 0
+        puts "Listing players"
+        @outstream.puts("list")
+      end
       
       if (counter % (CHAT_TIME/SLEEP_TIME)) == 0
         Chat.uninserted.each do |chat|
+          puts "inserting chat message from #{chat.player.name}"
           chat.needs_insertion = false
           chat.save
           @outstream.puts("say <#{chat.player.name}>: #{chat.message}")
