@@ -1,0 +1,10 @@
+%tr
+  %th Date
+  %th Player
+  %th Message
+- chats ||= []
+- chats.each do |chat|
+  %tr
+    %td= chat.created_at.to_s
+    %td= chat.player.name
+    %td= chat.message

@@ -1,0 +1,1 @@
+MINECRAFT_SERVER_FOLDER = "/Users/Guillaume/Documents/MinecraftServerSettings/server"
