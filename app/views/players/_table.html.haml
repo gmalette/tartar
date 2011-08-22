@@ -1,0 +1,7 @@
+%tr
+  %th Name
+  %th Status
+- @players.each do |p|
+  %tr
+    %td= p.name
+    %td= p.online ? "Online" : "Offline"

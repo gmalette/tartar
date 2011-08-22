@@ -3,6 +3,11 @@ class Tartar::Runner
   INFOS_TIME = 60
   CHAT_TIME  = 5
   
+  PlayerNameRegexp = "(?<player>([a-zA-Z0-9]+))"
+  ChatRegexp = %r{ \[INFO\]\s<#{PlayerNameRegexp}>\s(?<string>(.*)) }x
+  ConnectedRegexp = %r{Connected players: (.*)}
+  CommandRegexp =   %r{\[INFO\]\s<#{PlayerNameRegexp}>\s:(?<command>[a-zA-Z]*+)}
+  
   @@command_queue = []
   
   def initialize instream, outstream
@@ -18,21 +23,39 @@ class Tartar::Runner
   end
   
   def mine string
-    if (matches = string.match %r{ \[INFO\]\s<(?<player> ([a-zA-Z]+))> (?<string> (.*)) }x)
+    if (matches = string.match CommandRegexp)
+      execute_commands matches['player'], matches['command']
+    elsif (matches = string.match ChatRegexp)
       player = Player.find_or_create_by_name matches[:player]
       Chat.create(:player => player, :message => matches[:string])
       puts "#{matches[:player]} said: #{matches[:string]}"
-    elsif (matches = string.match /Connected players: (.*)/)
-       Player.update_all(:online => false)
-       puts "Marking all players as offline"
-       matches[1].split(",").each do |player|
-         p = Player.find_or_create_by_name(player.strip)
-         puts "Marking #{player.strip} online"
-         p.online = true
-         p.save
-       end
+    elsif (matches = string.match ConnectedRegexp)
+      Player.update_all(:online => false)
+      puts "Marking all players as offline"
+      matches[1].split(",").each do |player|
+        p = Player.find_or_create_by_name(player.strip)
+        puts "Marking #{player.strip} online"
+        p.online = true
+        p.save
+      end
     else
       puts string
+    end
+  end
+  
+  def execute_commands player, command
+    p "Found command: #{command}"
+    commands = command.split(/\s/)
+    
+    case commands[0]
+    when "roll"
+      max = commands[1] ? commands[1].to_i : 100
+      @outstream.puts "say #{player} rolled #{rand(max)} (#{max})"
+    when "list"
+      names = Player.where(:online => true).collect(&:name).join(", ")
+      @outstream.puts "tell #{player} Player online: #{names}"
+    else
+      @outstream.puts "tell #{player} Unknown Command #{commands[0]}"
     end
   end
   

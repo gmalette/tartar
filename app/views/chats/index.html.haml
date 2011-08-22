@@ -6,10 +6,11 @@
 
 %h2 Players
 %table#players
-  %tr
-    %th Name
-    %th Status
-  - @players.each do |p|
-    %tr
-      %td= p.name
-      %td= p.online ? "Online" : "Offline"
+  = render "players/table"
+      
+:javascript
+  new PeriodicalExecuter(function(pe){
+  new Ajax.Request("/",{
+    
+  });
+  }, 5)

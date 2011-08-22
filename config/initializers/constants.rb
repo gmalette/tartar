@@ -1,1 +1,1 @@
-MINECRAFT_SERVER_FOLDER = "/Users/Guillaume/Documents/MinecraftServerSettings/server"
+MINECRAFT_SERVER_FOLDER = "/Users/Wako/Documents/MinecraftServerSettings/server"
