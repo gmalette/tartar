@@ -6,7 +6,7 @@ class Tartar::Runner
   PlayerNameRegexp = "(?<player>([a-zA-Z0-9]+))"
   ChatRegexp = %r{ \[INFO\]\s<#{PlayerNameRegexp}>\s(?<string>(.*)) }x
   ConnectedRegexp = %r{Connected players: (.*)}
-  CommandRegexp =   %r{\[INFO\]\s<#{PlayerNameRegexp}>\s:(?<command>[a-zA-Z]*+)}
+  CommandRegexp =   %r{\[INFO\]\s<#{PlayerNameRegexp}>\s:(?<command>[a-zA-Z].*+)}
   
   @@command_queue = []
   
