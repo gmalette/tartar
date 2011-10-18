@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Tartar::Application.config.secret_token = '5068ba706615a65984d13581f5e31a4a12f828a5a2cf1e6f7b43f207d2105d639efbb13155071fb88653e8ab9c215fac48084ae6fc2b7f8e7580957b8af9e366'
+Tartar::Application.config.secret_token = '47efd55f6d5cf18cada98aece22c3131ce8ab633ae71d1f2eb8d455528225d95e86a64ae00a8df409277de05ee525cb1099a21436d87945055db0fb47e242e43'

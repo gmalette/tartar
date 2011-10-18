@@ -1,2 +1,2 @@
-Element.update("chat_messages", "#{escape_javascript(render "chats/table", :chats => @chats)}");
-Element.update("players", "#{escape_javascript(render "players/table", :players => @players)}");
+$("#chat_messages").html("#{escape_javascript(render "chats/table", :chats => @chats)}");
+$("#players").html("#{escape_javascript(render "players/table", :players => @players)}");

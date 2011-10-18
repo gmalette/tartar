@@ -44,8 +44,10 @@ class Tartar::Runner
   end
   
   def execute_commands player, command
-    p "Found command: #{command}"
+    p "Found command: #{command}, player: #{player}"
     commands = command.split(/\s/)
+    
+    player = Player.find_by_name player
     
     case commands[0]
     when "roll"
@@ -53,9 +55,17 @@ class Tartar::Runner
       @outstream.puts "say #{player} rolled #{rand(max)} (#{max})"
     when "list"
       names = Player.where(:online => true).collect(&:name).join(", ")
-      @outstream.puts "tell #{player} Player online: #{names}"
+      @outstream.puts "tell #{player.name} Player online: #{names}"
+    when "password"
+      @outstream.puts "tell #{player.name} your password is : #{player.password}"
+    when "wool"
+      if player.block
+        @outstream.puts "give #{player.name} #{player.block.external_id} #{commands[1] || 1}" 
+      else
+        @outstream.puts "tell #{player.name} you have no block associated."
+      end
     else
-      @outstream.puts "tell #{player} Unknown Command #{commands[0]}"
+      @outstream.puts "tell #{player.name} Unknown Command #{commands[0]}."
     end
   end
   

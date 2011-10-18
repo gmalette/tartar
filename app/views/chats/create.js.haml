@@ -1,2 +1,2 @@
-$("chat_message").value = "";
-Element.update("chat_messages", "#{escape_javascript(render :partial => "chats/table", :locals => {:chats => @chats})}");
+$("#chat_message").val("")
+$("#chat_messages").html("#{escape_javascript(render :partial => "chats/table", :locals => {:chats => @chats})}");

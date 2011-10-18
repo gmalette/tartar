@@ -8,9 +8,10 @@
 %table#players
   = render "players/table"
       
-:javascript
-  new PeriodicalExecuter(function(pe){
-  new Ajax.Request("/",{
-    
-  });
-  }, 5)
+      
+:coffeescript
+  setInterval ->
+    $.ajax "/",
+      dataType: "script"
+  , 5000
+  
